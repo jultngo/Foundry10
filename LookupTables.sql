@@ -9,37 +9,43 @@
 -- Team
 
 CREATE TABLE Position (
-    PositionID int,
-    PositionName VARCHAR(255),
-    PositionDesc VARCHAR(255)
+    PositionID int NOT NULL PRIMARY KEY,
+    PositionName VARCHAR(255) NOT NULL,
+    PositionDesc VARCHAR(255),
 )
+DROP TABLE Position;
 
 CREATE TABLE Status (
-    StatusID int,
-    StatusName VARCHAR(255),
+    StatusID int NOT NULL PRIMARY KEY,
+    StatusName VARCHAR(255) NOT NULL,
     StatusDesc VARCHAR(255)
 )
+DROP TABLE Status;
 
 CREATE TABLE ActivityType (
-    ActivityTypeID int,
-    ActivityTypeName VARCHAR(255),
+    ActivityTypeID int NOT NULL PRIMARY KEY,
+    ActivityTypeName VARCHAR(255) NOT NULL,
     ActivityTypeDesc VARCHAR(255)
 )
+DROP TABLE ActivityType;
 
 CREATE TABLE OrgType (
-    OrgTypeID int,
-    OrgTypeName VARCHAR(255),
+    OrgTypeID int NOT NULL PRIMARY KEY,
+    OrgTypeName VARCHAR(255) NOT NULL,
     OrgTypeDesc VARCHAR(255)
 )
+DROP TABLE OrgType;
 
 CREATE TABLE PartnerDesignation (
-    PartnerDesignationID int,
-    PartnerDesignationName VARCHAR(255),
+    PartnerDesignationID int NOT NULL PRIMARY KEY,
+    PartnerDesignationName VARCHAR(255) NOT NULL,
     PartnerDesignationDesc VARCHAR(255)
 )
+DROP TABLE PartnerDesignation;
 
 CREATE TABLE Team (
-    TeamID int,
-    TeamName VARCHAR(255),
+    TeamID int NOT NULL PRIMARY KEY,
+    TeamName VARCHAR(255) NOT NULL,
     TeamDesc VARCHAR(255)
 )
+DROP TABLE Team;
