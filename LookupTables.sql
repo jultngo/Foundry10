@@ -49,3 +49,7 @@ CREATE TABLE Team (
     TeamDesc VARCHAR(255)
 )
 DROP TABLE Team;
+
+CREATE FakeTeam(
+    FTID int NOT NULL PRIMARY KEY
+)
