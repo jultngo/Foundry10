@@ -1,0 +1,5 @@
+-- Listing all the possible use cases for SP code
+-- {INSERT INTO} SP for all tables (lookup + Fact)
+-- Record an employee's movement between teams or jobs within a team or change in salary
+-- Record an employee's resignation/termination + reason
+-- Update the status of a partner organization or a partner contact (define 3-4 statuses for another lookup table)
