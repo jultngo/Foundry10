@@ -11,6 +11,7 @@
 -- Job
 
 -- I think that it might be in our best interested of removing this table and move start/end date to the activity table
+-- Would it make sense to include the vernacular for the primary keys instead of letting the system assign one? Increments based on a specific starting digit that can help identify what table it belongs to.
 CREATE TABLE ActivityStatus (
     ActivityStatusID int NOT NULL PRIMARY KEY,
     StatusID int NOT NULL FOREIGN KEY REFERENCES Status(StatusID),
