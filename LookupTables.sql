@@ -7,6 +7,7 @@
 -- OrgType
 -- PartnerDesignation
 -- Team
+-- Employee
 
 CREATE TABLE Position (
     PositionID INT NOT NULL PRIMARY KEY,
