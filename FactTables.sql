@@ -9,11 +9,6 @@
 -- TeamEmployee
 -- Job
 
-<<<<<<< HEAD
-=======
--- I think that it might be in our best interested of removing this table and move start/end date to the activity table
--- Would it make sense to include the vernacular for the primary keys instead of letting the system assign one? Increments based on a specific starting digit that can help identify what table it belongs to.
->>>>>>> 93e49c4da33e7f47051a4b456d77e6eb1ad8e37e
 CREATE TABLE ActivityStatus (
     ActivityStatusID int NOT NULL PRIMARY KEY,
     StatusID int NOT NULL FOREIGN KEY REFERENCES Status(StatusID),
@@ -63,7 +58,7 @@ DROP TABLE PrPoc;
 
 CREATE TABLE Philanthropic (
     PhilanthropicID INT NOT NULL PRIMARY KEY,
-    PartnerOrgID INT NOT NULL FOREIGN KEY REFERENCES ParterOrg(PartnerOrgID),
+    PartnerOrgID INT NOT NULL FOREIGN KEY REFERENCES PartnerOrg(PartnerOrgID),
     TeamID INT NOT NULL FOREIGN KEY REFERENCES Team(TeamID),
     SignDate DATE,
     PhilAmount NUMERIC(15,5),
