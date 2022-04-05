@@ -29,3 +29,40 @@ VALUES('Cognitive Development', ''), ('Creativity', ''), ('Technology and Learni
 
 INSERT INTO [PartnerDesignation] (PartnerDesignationName, PartnerDesignationDesc)
 VALUES('Account Manager', ''), ('Senior Account Manager', ''), ('Business Manager', '')
+
+-- STORED PROCEDURE
+
+-- ADD A NEW ORGTYPE
+CREATE PROCEDURE InsertOrgType
+@Org_Name varchar(255),
+@Org_Des varchar(255)
+AS 
+BEGIN TRANSACTION T1
+    INSERT INTO [OrgType] (OrgTypeName, OrgTypeDesc)
+    VALUES(@Org_Name, @Org_Des)
+COMMIT TRANSACTION T1
+GO
+
+-- ADD A NEW ORGTYPE - TEST - WORKED
+EXEC InsertOrgType
+@Org_Name = 'Charities',
+@Org_Des = NULL
+
+-- ADD A NEW POSITION
+CREATE PROCEDURE InsertPosition
+@P_Name varchar(255),
+@P_Des varchar(255),
+@B_Salary numeric(15,5)
+AS 
+BEGIN TRANSACTION T2
+    INSERT INTO [Position] (PositionName, PositionDesc, BaseSalary)
+    VALUES(@P_Name, @P_Des, @B_Salary)
+COMMIT TRANSACTION T2
+GO
+
+-- ADD A NEW POSITION - TEST - WORKED
+EXEC InsertPosition
+@P_Name = 'Finance Analyst',
+@P_Des = '3-7 years of experience',
+@B_Salary = 70000
+
