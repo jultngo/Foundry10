@@ -49,12 +49,12 @@ CREATE TABLE PartnerContact (
 )
 DROP TABLE PartnerContact;
 
-CREATE TABLE PrPoc (
-    PrPocID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE PartnerLiaison (
+    PartnerLiaisonID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     PartnerContactID INT NOT NULL FOREIGN KEY REFERENCES PartnerContact(PartnerContactID),
     ActivityID INT NOT NULL FOREIGN KEY REFERENCES Activity(ActivityID)
 )
-DROP TABLE PrPoc;
+DROP TABLE PartnerLiaison;
 
 CREATE TABLE Philanthropic (
     PhilanthropicID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
