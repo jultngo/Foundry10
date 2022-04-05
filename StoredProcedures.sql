@@ -27,3 +27,5 @@ VALUES('Corporation', ''), ('Non-Profit', ''), ('Government', '')
 INSERT INTO [ActivityType] (ActivityTypeName, ActivityTypeDesc)
 VALUES('Cognitive Development', ''), ('Creativity', ''), ('Technology and Learning', '')
 
+INSERT INTO [PartnerDesignation] (PartnerDesignationName, PartnerDesignationDesc)
+VALUES('Account Manager', ''), ('Senior Account Manager', ''), ('Business Manager', '')
