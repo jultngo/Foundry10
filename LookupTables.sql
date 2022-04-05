@@ -13,6 +13,7 @@ CREATE TABLE Position (
     PositionID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     PositionName VARCHAR(255) NOT NULL,
     PositionDesc VARCHAR(255),
+    BaseSalary NUMERIC(15,5) NOT NULL,
 )
 DROP TABLE Position;
 
@@ -53,9 +54,12 @@ DROP TABLE Team;
 
 CREATE TABLE Employee (
     EmployeeID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    Fname VARCHAR(25),
-    Lname VARCHAR(25),
+    Fname VARCHAR(25) NOT NULL,
+    Lname VARCHAR(25) NOT NULL,
     Cell VARCHAR(10),
-    Email VARCHAR(50)
+    Email VARCHAR(50),
+    HireDate Date NOT NULL,
+    LastDate Date,
+    ExitReason VARCHAR(255)
 )
 DROP TABLE Employee;
