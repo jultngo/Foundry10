@@ -3,16 +3,17 @@
 -- Activity
 -- ActivityStatus
 -- PartnerContact
--- PRPOC
+-- PartnerLiaison
 -- PartnerOrg
--- Philantropic
+-- Philanthropic
 -- TeamEmployee
 -- Job
 
 CREATE TABLE Activity (
     ActivityID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
     ActivityTypeID int NOT NULL FOREIGN KEY REFERENCES ActivityType(ActivityTypeID),
-    ActivityName VARCHAR(255) NOT NULL
+    ActivityName VARCHAR(255) NOT NULL,
+    NumOfParticipants INT
 )
 DROP TABLE Activity;
 
@@ -20,20 +21,20 @@ CREATE TABLE ActivityStatus (
     ActivityStatusID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
     StatusID int NOT NULL FOREIGN KEY REFERENCES Status(StatusID),
     ActivityID int NOT NULL FOREIGN KEY REFERENCES Activity(ActivityID),
-    ActivityStartDate DATE NOT NULL,
-    ActivityEndDate DATE
+    ActivityStatusStartDate DATE NOT NULL,
+    ActivityStatusEndDate DATE
 )
 DROP TABLE ActivityStatus;
 
 CREATE TABLE PartnerOrg (
     PartnerOrgID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
     OrgTypeID INT NOT NULL FOREIGN KEY REFERENCES OrgType(OrgTypeID),
-    PartnerOrgName VARCHAR(200),
-    Phone VARCHAR(10), -- PHONE NUMBERS IN THE US ARE 10 DIGITS LONG
-    Address VARCHAR(255),
-    City VARCHAR(255),
-    State VARCHAR(15),
-    Zipcode VARCHAR(10)
+    PartnerOrgName VARCHAR(200) NOT NULL,
+    PartnerOrgPhone VARCHAR(10), -- PHONE NUMBERS IN THE US ARE 10 DIGITS LONG
+    PartnerOrgAddress VARCHAR(255),
+    PartnerOrgCity VARCHAR(255),
+    PartnerOrgState VARCHAR(15),
+    PartnerOrgZipcode VARCHAR(10)
 
 )
 DROP TABLE PartnerOrg;
@@ -41,11 +42,11 @@ DROP TABLE PartnerOrg;
 CREATE TABLE PartnerContact (
     PartnerContactID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
     PartnerOrgID int NOT NULL FOREIGN KEY REFERENCES PartnerOrg(PartnerOrgID),
-    PartnerDesignationID int NOT NULL FOREIGN KEY REFERENCES PartnerDesignation(PartnerDesignationID),
-    Fname VARCHAR(25),
-    Lname VARCHAR(25),
-    Phone VARCHAR(10),
-    Email VARCHAR(50)
+    PartnerPositionID int NOT NULL FOREIGN KEY REFERENCES PartnerPosition(PartnerPositionID),
+    PartnerContactFName VARCHAR(50) NOT NULL,
+    PartnerContactLname VARCHAR(50) NOT NULL,
+    PartnerContactPhone VARCHAR(10),
+    PartnerContactEmail VARCHAR(100)
 )
 DROP TABLE PartnerContact;
 
@@ -60,9 +61,9 @@ CREATE TABLE Philanthropic (
     PhilanthropicID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     PartnerOrgID INT NOT NULL FOREIGN KEY REFERENCES PartnerOrg(PartnerOrgID),
     TeamID INT NOT NULL FOREIGN KEY REFERENCES Team(TeamID),
-    SignDate DATE,
-    PhilAmount NUMERIC(15,5),
-    Purpose VARCHAR(255)
+    PhilanthropicSignDate DATE,
+    PhilanthropicAmount NUMERIC(15,2),
+    PhilanthropicPurpose VARCHAR(255)
 )
 DROP TABLE Philanthropic;
 
@@ -70,8 +71,8 @@ CREATE TABLE ActivityEmployee (
     ActivityEmployeeID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     ActivityID INT NOT NULL FOREIGN KEY REFERENCES Activity(ActivityID),
     EmployeeID INT NOT NULL FOREIGN KEY REFERENCES Employee(EmployeeID),
-    StartDate DATE,
-    EndDate DATE
+    ActivityEmployeeStartDate DATE,
+    ActivityEmployeeEndDate DATE
 )
 DROP TABLE ActivityEmployee;
 
@@ -80,8 +81,8 @@ CREATE TABLE Job (
     TeamID INT NOT NULL FOREIGN KEY REFERENCES Team(TeamID),
     EmployeeID INT NOT NULL FOREIGN KEY REFERENCES Employee(EmployeeID),
     PositionID INT NOT NULL FOREIGN KEY REFERENCES Position(PositionID),
-    StartDate DATE,
-    EndDate DATE,
-    Salary NUMERIC(15,5),
+    JobStartDate DATE,
+    JobEndDate DATE,
+    JobSalary NUMERIC(15,2),
 )
 DROP TABLE Job;
