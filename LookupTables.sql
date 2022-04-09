@@ -5,7 +5,7 @@
 -- Status
 -- ActivityType
 -- OrgType
--- PartnerDesignation
+-- PartnerPosition
 -- Team
 -- Employee
 
@@ -13,7 +13,7 @@ CREATE TABLE Position (
     PositionID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     PositionName VARCHAR(255) NOT NULL,
     PositionDesc VARCHAR(255),
-    BaseSalary NUMERIC(15,5) NOT NULL,
+    PositionBaseSalary NUMERIC(10,2) NOT NULL,
 )
 DROP TABLE Position;
 
@@ -38,12 +38,12 @@ CREATE TABLE OrgType (
 )
 DROP TABLE OrgType;
 
-CREATE TABLE PartnerDesignation (
-    PartnerDesignationID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    PartnerDesignationName VARCHAR(255) NOT NULL,
-    PartnerDesignationDesc VARCHAR(255)
+CREATE TABLE PartnerPosition (
+    PartnerPositionID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    PartnerPositionName VARCHAR(255) NOT NULL,
+    PartnerPositionDesc VARCHAR(255)
 )
-DROP TABLE PartnerDesignation;
+DROP TABLE PartnerPosition;
 
 CREATE TABLE Team (
     TeamID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
@@ -54,12 +54,12 @@ DROP TABLE Team;
 
 CREATE TABLE Employee (
     EmployeeID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    Fname VARCHAR(25) NOT NULL,
-    Lname VARCHAR(25) NOT NULL,
-    Cell VARCHAR(10),
-    Email VARCHAR(50),
-    HireDate Date NOT NULL,
-    LastDate Date,
-    ExitReason VARCHAR(255)
+    EmployeeFName VARCHAR(50) NOT NULL,
+    EmployeeLName VARCHAR(50) NOT NULL,
+    EmployePhone VARCHAR(10),
+    EmployeeEmail VARCHAR(100),
+    EmployeeHireDate Date NOT NULL,
+    EmployeeLastDate Date,
+    EmployeeExitReason VARCHAR(255)
 )
 DROP TABLE Employee;
