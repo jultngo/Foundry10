@@ -56,7 +56,7 @@ CREATE TABLE Employee (
     EmployeeID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     EmployeeFName VARCHAR(50) NOT NULL,
     EmployeeLName VARCHAR(50) NOT NULL,
-    EmployePhone VARCHAR(10),
+    EmployeePhone VARCHAR(10),
     EmployeeEmail VARCHAR(100),
     EmployeeHireDate Date NOT NULL,
     EmployeeLastDate Date,
