@@ -72,7 +72,7 @@ CREATE PROCEDURE InsertPartnerPosition
 @PP_Des varchar(255)
 AS 
 BEGIN TRANSACTION T5
-    INSERT INTO [PartnerDesignation] (PartnerPositionName, PartnerPositionDesc)
+    INSERT INTO [PartnerPosition] (PartnerPositionName, PartnerPositionDesc)
     VALUES(@PD_Name, @PD_Des)
 COMMIT TRANSACTION T5
 GO
