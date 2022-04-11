@@ -20,7 +20,7 @@ EXEC InsertOrgType
 CREATE PROCEDURE InsertPosition
 @P_Name varchar(255),
 @P_Des varchar(255),
-@B_Salary numeric(15,5)
+@B_Salary numeric(10,2)
 AS 
 BEGIN TRANSACTION T2
     INSERT INTO [Position] (PositionName, PositionDesc, PositionBaseSalary)
@@ -73,7 +73,7 @@ CREATE PROCEDURE InsertPartnerPosition
 AS 
 BEGIN TRANSACTION T5
     INSERT INTO [PartnerPosition] (PartnerPositionName, PartnerPositionDesc)
-    VALUES(@PD_Name, @PD_Des)
+    VALUES(@PP_Name, @PP_Des)
 COMMIT TRANSACTION T5
 GO
 
