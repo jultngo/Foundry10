@@ -1,36 +1,4 @@
--- LOOK UP TABLES POPULATION
-
-INSERT INTO [Position] (PositionName, PositionDesc, BaseSalary)
-VALUES('Associate Researcher', '1-2 years of Research Experience', '60000'),
-('Program Coordinator', '4-7 years of Experience', '80000' ),
-('Project Manager', '3-7 years of Experience', '75000')
-
-INSERT INTO [Employee] (Fname, Lname, Cell, Email, HireDate, LastDate, ExitReason)
-VALUES('Luanna', 'Macabee', '2624537467', 'lmacabee@hotmail.com', '2020-12-01', NULL, ''),
-('Krissy', 'Finey', '3284496839', 'kfiney@hotmail.com', '2019-12-01', '2022-01-01', 'Resign'),
-('Trent', 'Polkis', '4763847788', 'tpolkis@hotmail.com', '2017-11-25', NULL, '')
-
-INSERT INTO [Team] (TeamName, TeamDesc)
-VALUES('Research', 'Team that does all of the research'),
-('School', 'Team that works with schools'),
-('Restaurant', 'Team that works with restaurants')
-
-INSERT INTO [Status] (StatusName, StatusDesc)
-VALUES('Initial', 'Initial Phase of an activity'),
-('In Progress', 'On-going activities'),
-('Canceled', 'Activities that are canceled'),
-('Completed', 'Completed Activities')
-
-INSERT INTO [OrgType] (OrgTypeName, OrgTypeDesc)
-VALUES('Corporation', ''), ('Non-Profit', ''), ('Government', '')
-
-INSERT INTO [ActivityType] (ActivityTypeName, ActivityTypeDesc)
-VALUES('Cognitive Development', ''), ('Creativity', ''), ('Technology and Learning', '')
-
-INSERT INTO [PartnerDesignation] (PartnerDesignationName, PartnerDesignationDesc)
-VALUES('Account Manager', ''), ('Senior Account Manager', ''), ('Business Manager', '')
-
--- STORED PROCEDURE
+-- STORED PROCEDURE LOOK-UP TABLES 
 
 -- ADD A NEW ORGTYPE
 CREATE PROCEDURE InsertOrgType
@@ -55,7 +23,7 @@ CREATE PROCEDURE InsertPosition
 @B_Salary numeric(15,5)
 AS 
 BEGIN TRANSACTION T2
-    INSERT INTO [Position] (PositionName, PositionDesc, BaseSalary)
+    INSERT INTO [Position] (PositionName, PositionDesc, PositionBaseSalary)
     VALUES(@P_Name, @P_Des, @B_Salary)
 COMMIT TRANSACTION T2
 GO
@@ -98,35 +66,35 @@ EXEC InsertActivityType
 @AT_Name = 'Social and Cultural Development',
 @AT_Des = NULL
 
--- ADD A NEW PARTNER DESIGNATION
-CREATE PROCEDURE InsertPartnerDesignation
-@PD_Name varchar(255),
-@PD_Des varchar(255)
+-- ADD A NEW PARTNER POSITION
+CREATE PROCEDURE InsertPartnerPosition
+@PP_Name varchar(255),
+@PP_Des varchar(255)
 AS 
 BEGIN TRANSACTION T5
-    INSERT INTO [PartnerDesignation] (PartnerDesignationName, PartnerDesignationDesc)
+    INSERT INTO [PartnerDesignation] (PartnerPositionName, PartnerPositionDesc)
     VALUES(@PD_Name, @PD_Des)
 COMMIT TRANSACTION T5
 GO
 
--- ADD A NEW PARTNER DESIGNATION - TEST - WORKED
-EXEC InsertPartnerDesignation
-@PD_Name = 'Senior Partner Manager',
-@PD_Des = NULL
+-- ADD A NEW PARTNER POSITION - TEST - WORKED
+EXEC InsertPartnerPosition
+@PP_Name = 'Senior Partner Manager',
+@PP_Des = NULL
 
 -- ADD A NEW EMPLOYEE
 CREATE PROCEDURE InsertEmployee
-@E_FName varchar(25),
-@E_LName varchar(25),
-@E_Cell varchar(10),
-@E_Email varchar(50),
+@E_FName varchar(50),
+@E_LName varchar(50),
+@E_Phone varchar(10),
+@E_Email varchar(100),
 @E_HDate date,
 @E_LDate date,
 @E_Exit varchar(255)
 AS 
 BEGIN TRANSACTION T6
-    INSERT INTO [Employee] (Fname, Lname, Cell, Email, HireDate, LastDate, ExitReason)
-    VALUES(@E_FName, @E_LName, @E_Cell, @E_Email, @E_HDate, @E_LDate, @E_Exit)
+    INSERT INTO [Employee] (EmployeeFName, EmployeeLName, EmployeePhone, EmployeeEmail, EmployeeHireDate, EmployeeLastDate, EmployeeExitReason)
+    VALUES(@E_FName, @E_LName, @E_Phone, @E_Email, @E_HDate, @E_LDate, @E_Exit)
 COMMIT TRANSACTION T6
 GO
 
@@ -134,7 +102,7 @@ GO
 EXEC InsertEmployee
 @E_FName = 'Buzz',
 @E_LName = 'Lightyear',
-@E_Cell = '2067588908',
+@E_Phone = '2067588908',
 @E_Email = 'blightyear@hotmail.com',
 @E_HDate = '2016-01-01',
 @E_LDate = NULL,
