@@ -32,9 +32,9 @@ CREATE TABLE PartnerOrg (
     PartnerOrgName VARCHAR(200) NOT NULL,
     PartnerOrgPhone VARCHAR(10), -- PHONE NUMBERS IN THE US ARE 10 DIGITS LONG
     PartnerOrgAddress VARCHAR(255),
-    PartnerOrgCity VARCHAR(255),
+    PartnerOrgCity VARCHAR(20),
     PartnerOrgState VARCHAR(15),
-    PartnerOrgZipcode VARCHAR(10)
+    PartnerOrgZipcode VARCHAR(5)
 
 )
 DROP TABLE PartnerOrg;
