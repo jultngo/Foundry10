@@ -126,41 +126,43 @@ EXEC InsertStatus
 
 -- ADD A NEW JOB
 CREATE PROCEDURE InsertJob
-@Team_Name varchar(255),
-@Employee_FName varchar(25),
-@Employee_LName varchar(25),
-@Position_Name varchar(255),
-@Start_Date date,
-@End_Date date,
+@T_Name varchar(255),
+@E_Email varchar(100),
+@P_Name varchar(255),
+@S_Date date,
+@E_Date date,
 @Salaryy numeric(15,5)
 AS
 
-DECLARE @Team_ID INTEGER, @Employee_ID INTEGER, @Position_ID INTEGER
+DECLARE @T_ID INT, @E_ID INT, @P_ID INT
 
-SET @Team_ID = (SELECT TeamID FROM [Team]
-                WHERE TeamName = @Team_Name)
+EXEC GetTeamID
+@T1_Name = @T_Name,
+@T1_ID = @T_ID OUTPUT
 
-IF @Team_ID IS NULL
+IF @T_ID IS NULL
     BEGIN
-        PRINT 'Hey...@Team_ID is coming back empty;check spelling'
-        RAISERROR ('@Team_ID cannot be null;process is terminating', 11, 1)
+        PRINT 'Hey...@T_ID is coming back empty;check spelling'
+        RAISERROR ('@T_ID cannot be null;process is terminating', 11, 1)
         RETURN
     END
 
-SET @Employee_ID = (SELECT EmployeeID FROM [Employee]
-                WHERE Fname = @Employee_FName AND Lname = @Employee_LName)
+EXEC GetEmployeeID
+@E1_Email = @E_Email,
+@E1_ID = @E_ID OUTPUT
 
-IF @Employee_ID IS NULL
+IF @E_ID IS NULL
     BEGIN
-        PRINT 'Hey...@Employee_ID is coming back empty;check spelling'
-        RAISERROR ('@Employee_ID cannot be null;process is terminating', 11, 1)
+        PRINT 'Hey...@E_ID is coming back empty;check spelling'
+        RAISERROR ('@E_ID cannot be null;process is terminating', 11, 1)
         RETURN
     END
 
-SET @Position_ID = (SELECT PositionID FROM [Position]
-                WHERE PositionName = @Position_Name)
+EXEC GetPositionID
+@P1_Name = @P_Name,
+@P1_ID = @P_ID OUTPUT
 
-IF @Position_ID IS NULL
+IF @P_ID IS NULL
     BEGIN
         PRINT 'Hey...@Position_ID is coming back empty;check spelling'
         RAISERROR ('@Position_ID cannot be null;process is terminating', 11, 1)
@@ -168,8 +170,8 @@ IF @Position_ID IS NULL
     END
 
 BEGIN TRANSACTION T8
-INSERT INTO [Job] (TeamID, EmployeeID, PositionID, StartDate, EndDate, Salary)
-VALUES (@Team_ID, @Employee_ID, @Position_ID, @Start_Date, @End_Date, @Salaryy)
+INSERT INTO [Job] (TeamID, EmployeeID, PositionID, JobStartDate, JobEndDate, JobSalary)
+VALUES (@T_ID, @E_ID, @P_ID, @S_Date, @E_Date, @Salaryy)
 IF @@ERROR <> 0
     BEGIN
         ROLLBACK TRANSACTION T8
@@ -178,30 +180,126 @@ ELSE
 COMMIT TRANSACTION T8
 GO
 
--- ADD A NEW JOB - TEST - WORKED
-EXEC InsertJob
-@Team_Name ='Research',
-@Employee_FName ='Buzz',
-@Employee_LName ='Lightyear',
-@Position_Name ='Associate Researcher',
-@Start_Date ='2018-01-01',
-@End_Date = NULL,
-@Salaryy = 70000
+-- ADD A NEW PARTNERORG
+CREATE PROCEDURE InsertPartnerOrg
+@OT_Name varchar(255),
+@PO_Name varchar(200),
+@PO_Phone varchar(10),
+@PO_Address varchar(255),
+@PO_City varchar(20),
+@PO_State varchar(15),
+@PO_ZipCode varchar(5)
+AS 
 
-EXEC InsertJob
-@Team_Name ='Dance',
-@Employee_FName ='Luanna',
-@Employee_LName ='Macabee',
-@Position_Name ='Associate Researcher',
-@Start_Date ='2020-12-01',
-@End_Date = NULL,
-@Salaryy = 70000
+DECLARE @OT_ID INT 
 
-EXEC InsertJob
-@Team_Name ='School',
-@Employee_FName ='Krissy',
-@Employee_LName ='Finey',
-@Position_Name ='Associate Researcher',
-@Start_Date ='2019-12-01',
-@End_Date = '2022-01-01',
-@Salaryy = 65000
+EXEC GetOrgTypeID
+@OT1_Name = @OT_Name,
+@OT1_ID = @OT_ID OUTPUT 
+
+IF @OT_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@OT_ID is coming back empty;check spelling'
+        RAISERROR ('@OT_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRANSACTION T9
+INSERT INTO [PartnerOrg] (OrgTypeID, PartnerOrgName, PartnerOrgPhone, PartnerOrgAddress, PartnerOrgCity, PartnerOrgState, PartnerOrgZipcode)
+VALUES (@OT_ID, @PO_Name, @PO_Phone, @PO_Address, @PO_City, @PO_State, @PO_ZipCode)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T9
+    END
+ELSE
+COMMIT TRANSACTION T9
+GO
+
+-- ADD A NEW PHILANTHROPIC
+CREATE PROCEDURE InsertPhilanthropic
+@PO_Name varchar(200),
+@T_Name varchar(255),
+@Phil_SignDate date,
+@Phil_Amt numeric(15,2),
+@Phil_Purpose varchar(255)
+AS 
+
+DECLARE @PO_ID INT, @T_ID INT
+
+EXEC GetPartnerOrgID
+@PO1_Name = @PO_Name,
+@PO1_ID = @PO_ID OUTPUT 
+
+IF @PO_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@PO_ID is coming back empty;check spelling'
+        RAISERROR ('@PO_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+EXEC GetTeamID
+@T1_Name = @T_Name,
+@T1_ID = @T_ID OUTPUT
+
+IF @T_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@T_ID is coming back empty;check spelling'
+        RAISERROR ('@T_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRANSACTION T10
+INSERT INTO [Philanthropic] (PartnerOrgID, TeamID, PhilanthropicSignDate, PhilanthropicAmount, PhilanthropicPurpose)
+VALUES (@PO_ID, @T_ID, @Phil_SignDate, @Phil_Amt, @Phil_Purpose)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T10
+    END
+ELSE
+COMMIT TRANSACTION T10
+GO
+
+-- ADD A NEW PARTNER CONTACT
+CREATE PROCEDURE InsertPartnerContact
+@PO_Name varchar(200),
+@PP_Name varchar(255),
+@PC_FName varchar(50),
+@PC_LName varchar(50),
+@PC_Phone varchar(10),
+@PC_Email varchar(100)
+AS 
+
+DECLARE PO_ID INT, @PP_ID INT 
+
+EXEC GetPartnerOrgID
+@PO1_Name = @PO_Name,
+@PO1_ID = @PO_ID OUTPUT
+
+IF @PO_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@PO_ID is coming back empty;check spelling'
+        RAISERROR ('@PO_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+EXEC GetPartnerPositionID
+@PP1_Name = @PP_Name,
+@PP1_ID = @PP_ID OUTPUT 
+
+IF @PP_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@PP_ID is coming back empty;check spelling'
+        RAISERROR ('@PP_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRANSACTION T11
+INSERT INTO [PartnerContact] (PartnerOrgID, PartnerPositionID, PartnerContactFName, PartnerContactLName, PartnerContactPhone, PartnerContactEmail)
+VALUES (@PO_ID, @PP_ID, @PC_FName, @PC_LName, @PC_Phone, @PC_Email)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T11
+    END
+ELSE
+COMMIT TRANSACTION T11
+GO
