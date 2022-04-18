@@ -7,6 +7,8 @@ AS
 SET @T1_ID = (SELECT TeamID FROM [Team]
                 WHERE TeamName = @T1_Name)
 
+GO
+
 -- GetEmployeeID - using email
 CREATE PROCEDURE GetEmployeeID
 @E1_Email varchar(100),
@@ -15,6 +17,8 @@ AS
 
 SET @E1_ID = (SELECT EmployeeID FROM [Employee]
                 WHERE EmployeeEmail = @E1_Email)
+
+GO
 
 -- GetPositionID
 CREATE PROCEDURE GetPositionID
@@ -25,13 +29,17 @@ AS
 SET @1_ID = (SELECT PositionID FROM [Position]
                 WHERE PositionName = @P1_Name)
 
+GO
+
 -- GetOrgTypeID 
 CREATE PROCEDURE GetOrgTypeID
 @OT1_Name varchar(255),
 @OT1_ID INT OUTPUT 
 AS 
 
-SET @OT_ID = (SELECT OrgTypeID FROM OrgType WHERE OrgTypeName = @OT1_Name)
+SET @OT1_ID = (SELECT OrgTypeID FROM OrgType WHERE OrgTypeName = @OT1_Name)
+
+GO
 
 -- GetPartnerOrgID
 CREATE PROCEDURE GetPartnerOrgID
@@ -40,6 +48,8 @@ CREATE PROCEDURE GetPartnerOrgID
 AS 
 
 SET @PO1_ID = (SELECT PartnerOrgID FROM PartnerOrg WHERE PartnerOrgName = @PO1_Name)
+
+GO
 
 -- GetPartnerPositionID
 CREATE PROCEDURE GetPartnerPositionID

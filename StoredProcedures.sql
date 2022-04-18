@@ -9,12 +9,15 @@ BEGIN TRANSACTION T1
     INSERT INTO [OrgType] (OrgTypeName, OrgTypeDesc)
     VALUES(@Org_Name, @Org_Des)
 COMMIT TRANSACTION T1
+
 GO
 
 -- ADD A NEW ORGTYPE - TEST - WORKED
 EXEC InsertOrgType
 @Org_Name = 'Charities',
 @Org_Des = NULL
+
+GO
 
 -- ADD A NEW POSITION
 CREATE PROCEDURE InsertPosition
@@ -26,6 +29,8 @@ BEGIN TRANSACTION T2
     INSERT INTO [Position] (PositionName, PositionDesc, PositionBaseSalary)
     VALUES(@P_Name, @P_Des, @B_Salary)
 COMMIT TRANSACTION T2
+
+
 GO
 
 -- ADD A NEW POSITION - TEST - WORKED
@@ -33,6 +38,9 @@ EXEC InsertPosition
 @P_Name = 'Finance Analyst',
 @P_Des = '3-7 years of experience',
 @B_Salary = 70000
+
+
+GO 
 
 -- ADD A NEW TEAM
 CREATE PROCEDURE InsertTeam
@@ -43,12 +51,15 @@ BEGIN TRANSACTION T3
     INSERT INTO [Team] (TeamName, TeamDesc)
     VALUES(@T_Name, @T_Des)
 COMMIT TRANSACTION T3
+
 GO
 
 -- ADD A NEW TEAM - TEST - WORKED
 EXEC InsertTeam
 @T_Name = 'Dance',
 @T_Des = 'Team that works with Dance related stuff'
+
+GO
 
 -- ADD A NEW ACTIVITY TYPE
 CREATE PROCEDURE InsertActivityType
@@ -66,6 +77,9 @@ EXEC InsertActivityType
 @AT_Name = 'Social and Cultural Development',
 @AT_Des = NULL
 
+GO
+
+
 -- ADD A NEW PARTNER POSITION
 CREATE PROCEDURE InsertPartnerPosition
 @PP_Name varchar(255),
@@ -81,6 +95,8 @@ GO
 EXEC InsertPartnerPosition
 @PP_Name = 'Senior Partner Manager',
 @PP_Des = NULL
+
+GO
 
 -- ADD A NEW EMPLOYEE
 CREATE PROCEDURE InsertEmployee
@@ -108,6 +124,7 @@ EXEC InsertEmployee
 @E_LDate = NULL,
 @E_Exit = NULL
 
+GO
 -- ADD A NEW STATUS 
 CREATE PROCEDURE InsertStatus
 @S_Name varchar(255),
@@ -123,6 +140,8 @@ GO
 EXEC InsertStatus
 @S_Name = 'Ideation',
 @S_Des = 'Ideation Phase of an activity'
+
+GO
 
 -- ADD A NEW JOB
 CREATE PROCEDURE InsertJob
@@ -269,7 +288,7 @@ CREATE PROCEDURE InsertPartnerContact
 @PC_Email varchar(100)
 AS 
 
-DECLARE PO_ID INT, @PP_ID INT 
+DECLARE @PO_ID INT, @PP_ID INT 
 
 EXEC GetPartnerOrgID
 @PO1_Name = @PO_Name,
