@@ -322,3 +322,34 @@ IF @@ERROR <> 0
 ELSE
 COMMIT TRANSACTION T11
 GO
+
+-- ADD NEW ACTIVITY 
+CREATE PROCEDURE InsertActivity
+@AT_Name varchar(255),
+@A_Name varchar(255),
+@Num_Participants INT 
+AS 
+
+DECLARE @AT_ID INT 
+
+EXEC GetActivityTypeID
+@AT1_Name = @AT_Name,
+@AT1_ID = @AT_ID OUTPUT 
+
+IF @AT_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@AT_ID is coming back empty;check spelling'
+        RAISERROR ('@AT_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRANSACTION T12 
+INSERT INTO [Activity] (ActivityTypeID, ActivityName, NumOfParticipants)
+VALUES (@AT_ID, @A_Name, @Num_Participants)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T12
+    END
+ELSE
+COMMIT TRANSACTION T12
+GO
