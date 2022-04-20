@@ -23,10 +23,10 @@ GO
 -- GetPositionID
 CREATE PROCEDURE GetPositionID
 @P1_Name varchar(255),
-@1_ID INT OUTPUT
+@P1_ID INT OUTPUT
 AS 
 
-SET @1_ID = (SELECT PositionID FROM [Position]
+SET @P1_ID = (SELECT PositionID FROM [Position]
                 WHERE PositionName = @P1_Name)
 
 GO
@@ -58,3 +58,13 @@ CREATE PROCEDURE GetPartnerPositionID
 AS 
 
 SET @PP1_ID = (SELECT PartnerPositionID FROM PartnerPosition WHERE PartnerPositionName = @PP1_Name)
+GO 
+
+-- GetStatusID
+CREATE PROCEDURE GetStatusID
+@S1_Name varchar(255),
+@S1_ID INT OUTPUT
+AS 
+
+SET @S1_ID = (SELECT StatusID FROM Status WHERE StatusName = @S1_Name)
+GO 
