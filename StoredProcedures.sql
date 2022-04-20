@@ -353,3 +353,145 @@ IF @@ERROR <> 0
 ELSE
 COMMIT TRANSACTION T12
 GO
+
+-- ADD NEW PARTNER LIAISON
+CREATE PROCEDURE InsertPartnerLiaison
+@PC_FName varchar(50),
+@PC_LName varchar(50),
+@PC_Email varchar(100),
+@A_Name varchar(255),
+@AT_Name varchar(255),
+@Num_Participants INT 
+AS 
+
+DECLARE @PC_ID INT, @A_ID INT 
+EXEC GetPartnerContactID
+@PC1_FName = @PC_FName,
+@PC1_LName = @PC_LName,
+@PC1_Email = @PC_Email,
+@PC1_ID = @PC_ID OUTPUT 
+
+IF @PC_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@PC_ID is coming back empty;check spelling'
+        RAISERROR ('@PC_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+EXEC GetActivityID
+@A1_Name = @A_Name,
+@Num1_participants = @Num_Participants,
+@AT1_Name = @AT_Name,
+@A1_ID = @A_ID OUTPUT 
+
+IF @A_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@A_ID is coming back empty;check spelling'
+        RAISERROR ('@A_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+    
+BEGIN TRAN T13
+INSERT INTO [PartnerLiaison] (PartnerContactID, ActivityID)
+VALUES (@PC_ID, @A_ID)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T13
+    END
+ELSE
+COMMIT TRANSACTION T13
+GO
+
+-- INSERT NEW ACTIVITY STATUS 
+CREATE PROCEDURE InsertActivityStatus
+@S_Name varchar(255),
+@A_Name varchar(255),
+@Num_participants INT, 
+@AT_Name varchar(255),
+@AS_SDate date,
+@AS_EDate date 
+AS 
+
+DECLARE @S_ID INT, @A_ID INT
+
+EXEC GetStatusID
+@S1_Name = @S_Name,
+@S1_ID = @S_ID OUTPUT
+
+IF @S_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@S_ID is coming back empty;check spelling'
+        RAISERROR ('@S_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+EXEC GetActivityID
+@A1_Name = @A_Name,
+@Num1_participants = @Num_participants,
+@AT1_Name = @AT_Name,
+@A1_ID = @A_ID OUTPUT 
+
+IF @A_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@A_ID is coming back empty;check spelling'
+        RAISERROR ('@A_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRAN T14
+INSERT INTO [ActivityStatus] (StatusID, ActivityID, ActivityStatusStartDate, ActivityStatusEndDate)
+VALUES (@S_ID, @A_ID, @AS_SDate, @AS_EDate)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T14
+    END
+ELSE
+COMMIT TRANSACTION T14
+GO
+
+-- INSERT NEW ACTIVITY EMPLOYEE
+CREATE PROCEDURE InsertActivityEmployee
+@A_Name varchar(255),
+@Num_participants INT, 
+@AT_Name varchar(255),
+@E_Email varchar(100),
+@AE_SDate date,
+@AE_EDate date 
+AS 
+
+DECLARE @A_ID INT, @E_ID INT 
+
+EXEC GetActivityID
+@A1_Name = @A_Name,
+@Num1_participants = @Num_participants,
+@AT1_Name = @AT_Name,
+@A1_ID = @A_ID OUTPUT 
+
+IF @A_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@A_ID is coming back empty;check spelling'
+        RAISERROR ('@A_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+EXEC GetEmployeeID
+@E1_Email = @E_Email,
+@E1_ID = @E_ID OUTPUT
+
+IF @E_ID IS NULL
+    BEGIN
+        PRINT 'Hey...@E_ID is coming back empty;check spelling'
+        RAISERROR ('@E_ID cannot be null;process is terminating', 11, 1)
+        RETURN
+    END
+
+BEGIN TRAN T15
+INSERT INTO [ActivityEmployee] (ActivityID, EmployeeID, ActivityEmployeeStartDate, ActivityEmployeeEndDate)
+VALUES (@A_ID, @E_ID, @AE_SDate, @AE_EDate)
+IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRANSACTION T15
+    END
+ELSE
+COMMIT TRANSACTION T15
+GO
