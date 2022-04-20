@@ -41,15 +41,6 @@ SET @OT1_ID = (SELECT OrgTypeID FROM OrgType WHERE OrgTypeName = @OT1_Name)
 
 GO
 
--- GetPartnerOrgID
-CREATE PROCEDURE GetPartnerOrgID
-@PO1_Name varchar(200),
-@PO1_ID INT OUTPUT 
-AS 
-
-SET @PO1_ID = (SELECT PartnerOrgID FROM PartnerOrg WHERE PartnerOrgName = @PO1_Name)
-
-GO
 
 -- GetPartnerPositionID
 CREATE PROCEDURE GetPartnerPositionID
@@ -67,4 +58,15 @@ CREATE PROCEDURE GetStatusID
 AS 
 
 SET @S1_ID = (SELECT StatusID FROM Status WHERE StatusName = @S1_Name)
+
+GO 
+
+-- GetActivityTypeID 
+CREATE PROCEDURE GetActivityTypeID 
+@AT1_Name varchar(255),
+@AT1_ID INT OUTPUT 
+AS 
+
+SET @AT1_ID = (SELECT ActivityTypeID FROM ActivityType WHERE ActivityTypeName = @AT1_Name)
+
 GO 
