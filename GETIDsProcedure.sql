@@ -70,3 +70,33 @@ AS
 SET @AT1_ID = (SELECT ActivityTypeID FROM ActivityType WHERE ActivityTypeName = @AT1_Name)
 
 GO 
+
+-- GetPartnerContactID 
+CREATE PROCEDURE GetPartnerContactID
+@PC1_FName varchar(50),
+@PC1_LName varchar(50),
+@PC1_Email varchar(100),
+@PC1_ID INT OUTPUT 
+AS 
+
+SET @PC1_ID = (SELECT PartnerContactID FROM PartnerContact 
+                WHERE PartnerContactFName = @PC1_FName
+                AND PartnerContactLName = @PC1_LName AND PartnerContactEmail = @PC1_Email)
+
+GO
+
+-- GetActivityID
+CREATE PROCEDURE GetActivityID
+@A1_Name varchar (255),
+@Num1_participants INT,
+@AT1_Name varchar(255),
+@A1_ID INT OUTPUT 
+AS 
+
+SET @A1_ID = (SELECT ActivityID FROM Activity ACT  
+                JOIN ActivityType ACTYPE ON ACT.ActivityTypeID = ACTYPE.ActivityTypeID
+                WHERE ACT.ActivityName = @A1_Name
+                AND ACT.NumOfParticipants = @Num1_Participants
+                AND ACTYPE.ActivityTypeName = @AT1_Name)
+
+GO 
