@@ -100,3 +100,13 @@ SET @A1_ID = (SELECT ActivityID FROM Activity ACT
                 AND ACTYPE.ActivityTypeName = @AT1_Name)
 
 GO 
+
+-- GetPartnerOrgID
+CREATE PROCEDURE GetPartnerOrgID
+@PO1_Name varchar(200),
+@PO1_ID INT OUTPUT 
+AS 
+
+SET @PO1_ID = (SELECT PartnerOrgID FROM PartnerOrg WHERE PartnerOrgName = @PO1_Name)
+
+GO 
