@@ -150,7 +150,7 @@ CREATE PROCEDURE InsertJob
 @P_Name varchar(255),
 @S_Date date,
 @E_Date date,
-@Salaryy numeric(15,5)
+@Salaryy numeric(15,2)
 AS
 
 DECLARE @T_ID INT, @E_ID INT, @P_ID INT
@@ -199,6 +199,16 @@ ELSE
 COMMIT TRANSACTION T8
 GO
 
+-- ADD A NEW JOB - TEST - WORKED
+EXEC InsertJob
+@T_Name = 'Research',
+@E_Email = 'blightyear@hotmail.com',
+@P_Name = 'Project Manager',
+@S_Date = '2016-01-01',
+@E_Date = NULL ,
+@Salaryy = 95000
+GO  
+
 -- ADD A NEW PARTNERORG
 CREATE PROCEDURE InsertPartnerOrg
 @OT_Name varchar(255),
@@ -233,6 +243,17 @@ IF @@ERROR <> 0
 ELSE
 COMMIT TRANSACTION T9
 GO
+ 
+-- ADD A NEW PARTNER ORG - TEST- WORKED
+EXEC InsertPartnerOrg
+@OT_Name = 'Corporation',
+@PO_Name = 'Mondelez International',
+@PO_Phone = '2067577777',
+@PO_Address = 'One Mondelez Way',
+@PO_City = 'Seattle',
+@PO_State ='Washington',
+@PO_ZipCode = '98125'
+GO 
 
 -- ADD A NEW PHILANTHROPIC
 CREATE PROCEDURE InsertPhilanthropic
