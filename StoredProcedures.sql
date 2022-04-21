@@ -299,6 +299,14 @@ ELSE
 COMMIT TRANSACTION T10
 GO
 
+-- ADD A NEW PHILANTHROPIC - TEST- WORKED
+EXEC InsertPhilanthropic
+@PO_Name = 'Mondelez International',
+@T_Name = 'Dance',
+@Phil_SignDate = '2022-03-03',
+@Phil_Amt = 500000,
+@Phil_Purpose = 'Award Funds'
+
 -- ADD A NEW PARTNER CONTACT
 CREATE PROCEDURE InsertPartnerContact
 @PO_Name varchar(200),
@@ -344,6 +352,16 @@ ELSE
 COMMIT TRANSACTION T11
 GO
 
+-- ADD A NEW PARTNER CONTACT - TEST- WORKED
+EXEC InsertPartnerContact
+@PO_Name = 'Mondelez International',
+@PP_Name = 'Senior Account Manager',
+@PC_FName = 'Andy',
+@PC_LName = 'Davis',
+@PC_Phone = '4256768888',
+@PC_Email = 'adavis@mondelez.com'
+GO 
+
 -- ADD NEW ACTIVITY 
 CREATE PROCEDURE InsertActivity
 @AT_Name varchar(255),
@@ -374,6 +392,13 @@ IF @@ERROR <> 0
 ELSE
 COMMIT TRANSACTION T12
 GO
+
+-- ADD A NEW ACTIVITY - TEST- WORKED
+EXEC InsertActivity
+@AT_Name = 'Cognitive Development',
+@A_Name = 'The importance of theraphy webinar',
+@Num_Participants = 245
+GO 
 
 -- ADD NEW PARTNER LIAISON
 CREATE PROCEDURE InsertPartnerLiaison
@@ -423,6 +448,16 @@ ELSE
 COMMIT TRANSACTION T13
 GO
 
+-- ADD A NEW PARTNER LIAISON - TEST- WORKED
+EXEC InsertPartnerLiaison
+@PC_FName = 'Andy',
+@PC_LName = 'Davis',
+@PC_Email = 'adavis@mondelez.com',
+@A_Name = 'The importance of theraphy webinar',
+@AT_Name = 'Cognitive Development',
+@Num_Participants = 245
+GO 
+
 -- INSERT NEW ACTIVITY STATUS 
 CREATE PROCEDURE InsertActivityStatus
 @S_Name varchar(255),
@@ -470,6 +505,16 @@ ELSE
 COMMIT TRANSACTION T14
 GO
 
+-- ADD A NEW ACTIVITY STATUS - TEST- WORKED
+EXEC InsertActivityStatus
+@S_Name = 'Completed',
+@A_Name = 'The importance of theraphy webinar',
+@Num_participants = 245, 
+@AT_Name = 'Cognitive Development',
+@AS_SDate = '2022-04-01',
+@AS_EDate = '2022-04-15'
+GO 
+
 -- INSERT NEW ACTIVITY EMPLOYEE
 CREATE PROCEDURE InsertActivityEmployee
 @A_Name varchar(255),
@@ -515,4 +560,14 @@ IF @@ERROR <> 0
     END
 ELSE
 COMMIT TRANSACTION T15
+GO
+
+-- ADD A NEW ACTIVITY EMPLOYEE - TEST- WORKED
+EXEC InsertActivityEmployee
+@A_Name = 'The importance of theraphy webinar',
+@Num_participants = 245, 
+@AT_Name = 'Cognitive Development',
+@E_Email = 'blightyear@hotmail.com',
+@AE_SDate = '2022-03-01',
+@AE_EDate = '2022-04-20'
 GO
