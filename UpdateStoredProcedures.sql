@@ -1,19 +1,19 @@
 -- UPDATE EMPLOYEE RECORDS 
 CREATE PROCEDURE UpdateEmployeeInfo
-@E_UpdateFName varchar(50),
-@E_UpdateLName varchar(50),
-@E_UpdatePhone varchar(10),
-@E_TargetEmail varchar(100), -- used to find employee's records
-@E_UpdateEmail varchar(100),
-@E_UpdateHDate date,
-@E_UpdateLDate date,
-@E_UpdateExit varchar(255)
+@Target_EEmail varchar(100), -- used to find employee's records
+@Update_EFName varchar(50),
+@Update_ELName  varchar(50),
+@Update_EPhone varchar(10),
+@Update_EEmail varchar(100),
+@Update_EHDate date,
+@Update_ELDate date,
+@Update_EExit varchar(255)
 AS 
 
 DECLARE @E_ID INT 
 
 EXEC GetEmployeeID
-@E1_Email = @E_TargetEmail,
+@E1_Email = @Target_EEmail ,
 @E1_ID = @E_ID OUTPUT
 
 IF @E_ID IS NULL
@@ -25,13 +25,13 @@ IF @E_ID IS NULL
 
 BEGIN TRANSACTION T1
 UPDATE Employee
-SET EmployeeFName = @E_UpdateFName,
-EmployeeLName = @E_UpdateLName,
-EmployeePhone = @E_UpdatePhone,
-EmployeeEmail = @E_UpdateEmail,
-EmployeeHireDate = @E_UpdateHDate,
-EmployeeLastDate = @E_UpdateLDate,
-EmployeeExitReason = @E_UpdateExit
+SET EmployeeFName = @Update_EFName,
+EmployeeLName = @Update_ELName,
+EmployeePhone = @Update_EPhone,
+EmployeeEmail = @Update_EEmail,
+EmployeeHireDate = @Update_EHDate,
+EmployeeLastDate = @Update_ELDate,
+EmployeeExitReason = @Update_EExit
 WHERE EmployeeID = @E_ID
 IF @@ERROR <> 0
     BEGIN
@@ -43,27 +43,27 @@ GO
 
 -- TEST to update employee's email -- WORKED
 EXEC UpdateEmployeeInfo
-@E_UpdateFName ='Luanna',
-@E_UpdateLName ='Macabee',
-@E_UpdatePhone ='2066788777',
-@E_TargetEmail ='lmacabee@hotmail.com',
-@E_UpdateEmail ='lmacabee@foundry10.com',
-@E_UpdateHDate ='2020-12-01',
-@E_UpdateLDate = NULL,
-@E_UpdateExit = NULL
+@Target_EEmail ='lmacabee@hotmail.com',
+@Update_EFName ='Luanna',
+@Update_ELName ='Macabee',
+@Update_EPhone ='2066788777',
+@Update_EEmail='lmacabee@foundry10.com',
+@Update_EHDate ='2020-12-01',
+@Update_ELDate = NULL,
+@Update_EExit = NULL
 GO 
 
 -- UPDATE TEAM INFO
 CREATE PROCEDURE UpdateTeamInfo
-@T_TargetTName varchar(255),
-@T_UpdateTName varchar(255),
-@T_UpdateDesc varchar(255)
+@Target_TName varchar(255),
+@Update_TName varchar(255),
+@Update_TDesc varchar(255)
 AS 
 
 DECLARE @T_ID INT 
 
 EXEC GetTeamID
-@T1_Name = @T_TargetTName,
+@T1_Name = @Target_TName,
 @T1_ID = @T_ID OUTPUT
 
 IF @T_ID IS NULL
@@ -75,8 +75,8 @@ IF @T_ID IS NULL
 
 BEGIN TRANSACTION T1
 UPDATE Team
-SET TeamName = @T_UpdateTName,
-TeamDesc = @T_UpdateDesc
+SET TeamName = @Update_TName,
+TeamDesc = @Update_TDesc
 WHERE TeamID = @T_ID
 IF @@ERROR <> 0
     BEGIN
@@ -88,9 +88,9 @@ GO
 
 -- TEST to update a Team's name from 'Restaurant' to 'Ecommerce' -- WORKED
 EXEC UpdateTeamInfo
-@T_TargetTName = 'Restaurant',
-@T_UpdateTName = 'Ecommerce',
-@T_UpdateDesc = NULL
+@Target_TName = 'Restaurant',
+@Update_TName = 'Ecommerce',
+@Update_TDesc = NULL
 GO 
 
 -- UPDATE ACTIVITY INFO 
